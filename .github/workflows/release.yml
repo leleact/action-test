@@ -22,3 +22,12 @@ jobs:
           echo $(basename ${GITHUB_REF})
           echo ${GITHUB_EVENT_PATH}
           cat ${GITHUB_EVENT_PATH}
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: $(cat ${GITHUB_EVENT_PATH} | jq -r .release.upload_url) # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: ./action-test
+          asset_name: action-test
+          asset_content_type: octet-stream
