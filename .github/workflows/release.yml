@@ -20,4 +20,5 @@ jobs:
         run: |
           go build
           echo $(basename ${GITHUB_REF})
-          
+          echo ${GITHUB_EVENT_PATH}
+          cat ${GITHUB_EVENT_PATH}
